@@ -7,6 +7,7 @@ const dbUrl='mongodb://localhost:27017/jwtAuth';
 app.use(express.json());
 app.set('view engine','ejs');
 
+
 mongoose.connect(dbUrl,{useNewUrlParser:true})
 .then(()=>{
     app.listen(3000,()=>{
