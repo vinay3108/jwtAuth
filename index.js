@@ -1,6 +1,6 @@
 const express=require('express');
 const mongoose=require('mongoose');
-const { requireAuth } = require('./middlewares/authMiddlewares');
+const { requireAuth, checkUser } = require('./middlewares/authMiddlewares');
 const app=express();
 const cookieParser=require('cookie-parser');
 const authRoutes=require('./routes/authRoutes');
@@ -21,7 +21,7 @@ mongoose.connect(dbUrl,{useNewUrlParser:true})
 .catch((err)=>{
     console.log(err);
 })
-
+app.get("*",checkUser);
 app.get("/",requireAuth,(req,res)=>{
     res.send("hello"); 
 })
