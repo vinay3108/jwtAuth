@@ -8,6 +8,18 @@ exports.handleErrors=(err)=>{
         errors.email="email already exists";
         return errors;
     }
+
+    //login error
+    if(err.message==='Invalid User')
+    {
+        errors.email="Email is not Registered";
+        return errors;
+    }
+    if(err.message==='Incorrect Password')
+    {
+        errors.password='Password is Incorrect';
+        return errors;
+    }
     //validation errors
     if(err.message.includes('User validation failed'))
     {

@@ -27,7 +27,22 @@ userSchema.pre('save',async function(next){
 //     console.log("user saved succesfully in db",doc);
 //     next();
 // })
+//static method to login user
+userSchema.statics.login=async(email,password)=>{
+    const user=await User.findOne({email});
+    if(user)
+    {
+        const auth=await bcrypt.compare(password,user.password);
+        if(auth)
+        {
+            return user;
+        }
+        throw Error ("Incorrect Password");
+        
+    }
+    throw Error("Invalid User")
 
+}
 const User=mongoose.model("User",userSchema);
 
 

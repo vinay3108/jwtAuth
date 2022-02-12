@@ -1,11 +1,14 @@
 const express=require('express');
 const mongoose=require('mongoose');
+const { requireAuth } = require('./middlewares/authMiddlewares');
 const app=express();
+const cookieParser=require('cookie-parser');
 const authRoutes=require('./routes/authRoutes');
 const dbUrl='mongodb://localhost:27017/jwtAuth';
 
 app.use(express.json());
 app.set('view engine','ejs');
+app.use(cookieParser());
 
 
 mongoose.connect(dbUrl,{useNewUrlParser:true})
@@ -19,7 +22,7 @@ mongoose.connect(dbUrl,{useNewUrlParser:true})
     console.log(err);
 })
 
-app.get("/",(req,res)=>{
+app.get("/",requireAuth,(req,res)=>{
     res.send("hello"); 
 })
 
